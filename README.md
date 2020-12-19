@@ -15,7 +15,7 @@ Simple web app with an automated deploy :v:
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#setup">Setup</a></li>
       </ul>
     </li>
@@ -41,7 +41,6 @@ Yet another ~~complex~~ simple project for training DevOps and programming skill
 
 #### CI/CD
 
-- Jenkins
 - Circle CI
 
 #### Provisioning
@@ -60,7 +59,7 @@ Yet another ~~complex~~ simple project for training DevOps and programming skill
 - DynamoDB
 - S3
 
-#### Containers & Container Management
+#### Containers & Container Orchestration
 
 - Docker
 - Kubernetes
@@ -93,20 +92,21 @@ TODO
 
 ## Getting Started
 
-### Requirements
+### Prerequisites
 
+- CircleCI account
+- AWS account
 - Terraform 0.14.x
 
 ### Setup
 
 1. Fork this repository
-2. Change the Jenkinsfile
-3. Enter the *setup* directory
-4. Run `terraform init && terraform apply`
+2. Enter the *setup* directory
+3. Run `terraform init && terraform apply`
 
 ## Usage
 
-The deployment should trigger automatically after a commit to the master.
+The deployment should trigger automatically after pushing a commit to the master.
 
 ### Application Development
 
