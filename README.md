@@ -101,8 +101,9 @@ TODO
 ### Setup
 
 1. Fork this repository
-2. Enter the *setup* directory
-3. Run `terraform init && terraform apply`
+2. Open CircleCI and setup the project, adding your AWS credentials as environment variables
+3. Enter the *setup* directory and run `terraform init && terraform apply`
+4. Open *main.tf* and add the bucket ID
 
 ## Usage
 
