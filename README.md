@@ -54,7 +54,7 @@ Yet another ~~complex~~ simple project for training DevOps and programming skill
 - Consul
 - Vault
 
-#### Database Systems
+#### Database & Storage
 
 - DynamoDB
 - S3
