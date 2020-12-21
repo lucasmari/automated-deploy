@@ -29,7 +29,7 @@ Simple web app with an automated deploy :v:
 
 ## About
 
-Yet another ~~complex~~ simple project for training DevOps and programming skills.
+Yet another ~~complex~~ simple project for training DevOps and Programming skills.
 
 ## Structure and Components
 
