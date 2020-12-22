@@ -15,21 +15,16 @@ Simple web app with an automated deploy :v:
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#setup">Setup</a></li>
+        <li><a href="#production">Production</a>
+        <li><a href="#development">Development</a>
       </ul>
-    </li>
-    <li>
-      <a href="#usage">Usage</a>
-      <ul>
-        <li><a href="#application-development">Application Development</a>
     </li>
   </ol>
 </details>
 
-## About
+# About
 
-Yet another ~~complex~~ simple project for training DevOps and Programming skills.
+Yet another ~~complex~~ not so simple project for training DevOps and Programming skills.
 
 ## Structure and Components
 
@@ -41,7 +36,7 @@ Yet another ~~complex~~ simple project for training DevOps and Programming skill
 
 #### CI/CD
 
-- Circle CI
+- CircleCI
 
 #### Provisioning
 
@@ -56,7 +51,7 @@ Yet another ~~complex~~ simple project for training DevOps and Programming skill
 
 #### Database & Storage
 
-- DynamoDB
+- MongoDB
 - S3
 
 #### Containers & Container Orchestration
@@ -72,25 +67,38 @@ Yet another ~~complex~~ simple project for training DevOps and Programming skill
 
 ### Web Application
 
-#### Server
+#### Reverse Proxy
 
 - Nginx
 
-#### Frontend
+#### Frontend (JS, HTML, CSS)
 
-- HTML
-- CSS
-- JavaScript
+- Node.js (server)
+- React (library)
 
-#### Backend
+#### Backend (Ruby)
 
-- Ruby
+- Puma (server)
+- Sinatra (framework)
 
 ## How It Works
 
 TODO
 
-## Getting Started
+# Getting Started
+
+## Development
+
+### Prerequisites
+
+- Docker 20.10.x
+
+### Deployment
+
+1. Run `docker-compose up -d` in the project's root directory
+2. Access the frontend in *localhost* and the backend in *localhost/api*
+
+## Production
 
 ### Prerequisites
 
@@ -105,10 +113,6 @@ TODO
 3. Enter the *setup* directory and run `terraform init && terraform apply`
 4. Open *main.tf* and add the bucket ID
 
-## Usage
+### Deployment
 
-The deployment should trigger automatically after pushing a commit to the master.
-
-### Application Development
-
-TODO
+The deployment should trigger automatically after a push or merge to the master.
