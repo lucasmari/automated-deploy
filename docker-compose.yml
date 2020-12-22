@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  react-node:
+    build: ./frontend
+    volumes:
+      - ./frontend:/home/node/app:cached
+  sinatra-puma:
+    build: ./backend
+    volumes:
+      - ./backend:/home/sinatra/app:cached
+  nginx:
+    restart: always
+    build: ./infra/dev
+    ports:
+      - "80:80"

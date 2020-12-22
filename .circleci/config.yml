@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   plan-apply:
-    working_directory: ~/automated-deploy/infra
+    working_directory: ~/automated-deploy/infra/prod
     docker:
       - image: hashicorp/terraform:light
     steps:
@@ -19,7 +19,6 @@ jobs:
             - .
 
   apply:
-    working_directory: ~/automated-deploy/infra
     docker:
       - image: hashicorp/terraform:light
     steps:
@@ -35,7 +34,6 @@ jobs:
             - .
 
   plan-destroy:
-    working_directory: ~/automated-deploy/infra
     docker:
       - image: hashicorp/terraform:light
     steps:
@@ -51,7 +49,6 @@ jobs:
             - .
 
   destroy:
-    working_directory: ~/automated-deploy/infra
     docker:
       - image: hashicorp/terraform:light
     steps:
