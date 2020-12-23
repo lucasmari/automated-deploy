@@ -1,3 +1,4 @@
+require "mongo"
 require "sinatra"
 require "sinatra/reloader" if development?
 
@@ -8,5 +9,9 @@ class Application < Sinatra::Base
 
   get "/api" do
     "Yay"
+  end
+
+  get "/api/db" do
+    client = Mongo::Client.new(["mongo:27017"], :database => "test")
   end
 end

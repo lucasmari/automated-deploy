@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    bson (4.11.1)
+    mongo (2.14.0)
+      bson (>= 4.8.2, < 5.0.0)
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -28,6 +31,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  mongo
   puma
   sinatra
   sinatra-contrib

@@ -9,7 +9,13 @@ services:
     volumes:
       - ./backend:/home/sinatra/app:cached
   nginx:
-    restart: always
-    build: ./infra/dev
+    build: ./infra/dev/proxy
     ports:
       - "80:80"
+    restart: always
+  mongo:
+    build: ./infra/dev/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    restart: always
