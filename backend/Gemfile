@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "graphql"
 gem "mongoid"
 gem "puma"
 gem "sinatra"

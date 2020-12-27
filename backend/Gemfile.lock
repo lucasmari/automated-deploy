@@ -11,6 +11,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     bson (4.11.1)
     concurrent-ruby (1.1.7)
+    graphql (1.11.6)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     minitest (5.14.2)
@@ -50,6 +51,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  graphql
   mongoid
   puma
   sinatra
