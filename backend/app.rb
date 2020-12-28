@@ -21,12 +21,16 @@ class Application < Sinatra::Base
 
     news = [
       {
-        title: "Easter egg 1",
-        body: "New easter egg found!",
+        title: "Easter Egg 1",
+        body: "New easter egg found...",
       },
       {
-        title: "Easter egg 2",
-        body: "Unbelievable easter egg hiding in plain sight!",
+        title: "Easter Egg 2",
+        body: "An unbelievable easter egg was hiding in plain sight!",
+      },
+      {
+        title: "Easter Egg 3",
+        body: "Wow, something incredible was discovered!!!",
       },
     ]
 

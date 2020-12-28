@@ -15,8 +15,8 @@ Simple web app with an automated deploy :v:
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#production">Production</a>
         <li><a href="#development">Development</a>
+        <li><a href="#production">Production</a>
       </ul>
     </li>
   </ol>
@@ -96,7 +96,7 @@ TODO
 ### Deployment
 
 1. Run `docker-compose up -d` in the project's root directory
-2. Access the frontend in *localhost* and the backend in *localhost/api*
+2. Access the app at *localhost*
 
 ## Production
 
