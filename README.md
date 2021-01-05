@@ -67,19 +67,21 @@ Yet another ~~complex~~ not so simple project for training DevOps and Programmin
 
 ### Web Application
 
-#### Reverse Proxy
+#### Ingress/Load Balancer/Reverse Proxy
 
 - Nginx
 
 #### Frontend (JS, HTML, CSS)
 
-- Node.js (server)
+- Apollo (GraphQL client)
 - React (library)
+- Node.js (server)
 
 #### Backend (Ruby)
 
-- Puma (server)
+- GraphQL server
 - Sinatra (framework)
+- Puma (server)
 
 ## How It Works
 
@@ -91,12 +93,18 @@ TODO
 
 ### Prerequisites
 
-- Docker 20.10.x
+- [k3d 3.4.x](https://k3d.io/)
+- [Docker 20.10.x](https://www.docker.com/get-started)
+- [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+
+### Setup
+
+- Create a local cluster: `k3d cluster create -p "8082:80@loadbalancer"`
 
 ### Deployment
 
-1. Run `docker-compose up -d` in the project's root directory
-2. Access the app at *localhost*
+1. Run `skaffold dev` in the project's root directory
+2. Access the app at *localhost:8082*
 
 ## Production
 

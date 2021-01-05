@@ -1,7 +1,7 @@
 workers Integer(ENV["WEB_CONCURRENCY"] || 1)
-threads_count = Integer(ENV["THREAD_COUNT"] || 5)
+threads_count = Integer(ENV["THREAD_COUNT"] || 3)
 threads threads_count, threads_count
 
 rackup DefaultRackup
-port ENV["PORT"] || 3000
+port ENV["PORT"] || 4000
 environment ENV["RACK_ENV"] || "development"

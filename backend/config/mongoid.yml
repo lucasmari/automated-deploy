@@ -3,6 +3,6 @@ development:
     default:
       database: mongoid
       hosts:
-        - mongo:27017
+        - db.default.svc.cluster.local:27017
       options:
-        server_selection_timeout: 1
+        server_selection_timeout: 10

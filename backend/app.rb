@@ -22,7 +22,7 @@ class Application < Sinatra::Base
     news = [
       {
         title: "Easter Egg 1",
-        body: "New easter egg found...",
+        body: "Amazing new easter egg found!!!",
       },
       {
         title: "Easter Egg 2",
@@ -37,7 +37,7 @@ class Application < Sinatra::Base
     News.create!(news)
   end
 
-  post "/api/graphql" do
+  post "/graphql" do
     result = ApplicationSchema.execute(
       params[:query],
       variables: params[:variables],
