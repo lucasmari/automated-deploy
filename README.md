@@ -96,15 +96,29 @@ TODO
 - [k3d 3.4.x](https://k3d.io/)
 - [Docker 20.10.x](https://www.docker.com/get-started)
 - [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [helm 3.4.x](https://helm.sh/docs/intro/install/)
 
 ### Setup
 
-- Create a local cluster: `k3d cluster create -p "8082:80@loadbalancer"`
+Create a local cluster and add helm repositories:
+
+1. `k3d cluster create -p "8082:80@loadbalancer"`
+2. `helm repo add hashicorp https://helm.releases.hashicorp.com`
 
 ### Deployment
 
-1. Run `skaffold dev` in the project's root directory
-2. Access the app at *localhost:8082*
+Inside the project's root directory, run the following commands to deploy consul and bring the development environment up:
+
+1. `helm install -f infra/dev/consul/values.yml consul hashicorp/consul`
+2. `skaffold dev`
+
+Now you can access the app at *localhost:8082* :clap:
+
+#### Extra
+
+You can access Consul's dashboard in *localhost:18500* by running:
+
+- `kubectl port-forward service/consul-ui 18500:80 --address 0.0.0.0`
 
 ## Production
 

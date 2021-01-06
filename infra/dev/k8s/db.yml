@@ -1,33 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: proxy-back-deployment
+  name: db-deployment
   labels:
-    app: proxy-back
+    app: db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: proxy-back
+      app: db
   template:
     metadata:
       labels:
-        app: proxy-back
+        app: db
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
     spec:
       containers:
-        - name: proxy-back
-          image: nginx-back
+        - name: db
+          image: mongodb
           ports:
-            - containerPort: 8080
+            - containerPort: 27017
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: proxy-back
+  name: db
 spec:
   selector:
-    app: proxy-back
+    app: db
   ports:
   - protocol: TCP
-    port: 8080
+    port: 27017

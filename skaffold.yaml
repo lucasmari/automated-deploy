@@ -4,26 +4,26 @@ metadata:
   name: automated-deploy
 build:
   artifacts:
-  - image: nginx-front
-    context: infra/dev/proxy-front
-  - image: apollo-react-node
-    context: frontend
-    sync:
-      infer:
-      - '*.js'
-      - '*.css'
-  - image: nginx-back
-    context: infra/dev/proxy-back
-  - image: graphql-sinatra-puma
-    context: backend
-    sync:
-      infer:
-      - '*.rb'
-      - '*.ru'
-      - '*.yml'
-  - image: mongodb
-    context: infra/dev/db
+    - image: nginx-front
+      context: infra/dev/proxy-front
+    - image: apollo-react-node
+      context: frontend
+      sync:
+        infer:
+          - "*.js"
+          - "*.css"
+    - image: nginx-back
+      context: infra/dev/proxy-back
+    - image: graphql-sinatra-puma
+      context: backend
+      sync:
+        infer:
+          - "*.rb"
+          - "*.ru"
+          - "*.yml"
+    - image: mongodb
+      context: infra/dev/db
 deploy:
   kubectl:
     manifests:
-    - "k8s/*.yml"
+      - "infra/dev/k8s/*.yml"
