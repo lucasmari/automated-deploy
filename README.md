@@ -93,10 +93,11 @@ TODO
 
 ### Prerequisites
 
-- [k3d 3.4.x](https://k3d.io/)
 - [Docker 20.10.x](https://www.docker.com/get-started)
+- [k3d 3.4.x](https://k3d.io/)
 - [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3.4.x](https://helm.sh/docs/intro/install/)
+- [skaffold 1.17.x](https://skaffold.dev/docs/install/)
 
 ### Setup
 
@@ -124,9 +125,9 @@ You can access Consul's dashboard in *localhost:18500* by running:
 
 ### Prerequisites
 
-- CircleCI account
-- AWS account
-- Terraform 0.14.x
+- [CircleCI account](https://app.circleci.com/dashboard)
+- [AWS account](https://console.aws.amazon.com)
+- [terraform 0.14.x](https://www.terraform.io/downloads.html)
 
 ### Setup
 
