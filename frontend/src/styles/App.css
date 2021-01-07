@@ -8,6 +8,19 @@
   background-color: #202020;
 }
 
+.content-subcontainer {
+  width: full;
+  height: 60px;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.content-subcontainer Button {
+  float: right;
+}
+
 .news {
   width: full;
   height: 300px;

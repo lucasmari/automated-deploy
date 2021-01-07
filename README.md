@@ -115,7 +115,7 @@ Inside the project's root directory, run the following commands to deploy consul
 
 Now you can access the app at *localhost:8082* :clap:
 
-#### Extra
+### Extra
 
 You can access Consul's dashboard in *localhost:18500* by running:
 

@@ -5,6 +5,7 @@ require "sinatra/json"
 require "sinatra/reloader" if development?
 require "./graphql/schema"
 Dir["./graphql/types/*"].each { |file| require file }
+Dir["./graphql/mutations/*"].each { |file| require file }
 Dir["./models/*"].each { |file| require file }
 
 Mongoid.load!(File.join(File.dirname(__FILE__), "config", "mongoid.yml"))

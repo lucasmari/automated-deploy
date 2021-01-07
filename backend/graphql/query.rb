@@ -1,5 +1,5 @@
 require "graphql"
-require_relative "news"
+require_relative "./types/news"
 
 class QueryType < Types::BaseObject
   description "The query root of this schema"
