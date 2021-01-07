@@ -10,17 +10,18 @@ build:
       context: frontend
       sync:
         infer:
-          - "*.js"
-          - "*.css"
+          - "**/*.js"
+          - "**/*.html"
+          - "**/*.css"
     - image: nginx-back
       context: infra/dev/proxy-back
     - image: graphql-sinatra-puma
       context: backend
       sync:
         infer:
-          - "*.rb"
+          - "**/*.rb"
           - "*.ru"
-          - "*.yml"
+          - "config/*.yml"
     - image: mongodb
       context: infra/dev/db
 deploy:
