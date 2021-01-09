@@ -9,28 +9,29 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
-const CREATE_NEWS_MUTATION = gql`
-  mutation CreateNews($title: String!, $body: String!) {
-    createNews(title: $title, body: $body) {
+const SIGN_UP_MUTATION = gql`
+  mutation SignUp($email: String!, $password: String!) {
+    signUp(email: $email, password: $password) {
       success
       errors
     }
   }
 `;
 
-const CreateNews = () => {
+const SignUp = () => {
   const history = useHistory();
 
   const [formState, setFormState] = useState({
-    title: '',
-    body: '',
+    email: '',
+    password: '',
   });
 
-  const [createNews] = useMutation(CREATE_NEWS_MUTATION, {
+  const [signUp] = useMutation(SIGN_UP_MUTATION, {
     variables: {
-      title: formState.title,
-      body: formState.body,
+      email: formState.email,
+      password: formState.password,
     },
     onCompleted: () => history.push('/'),
   });
@@ -42,7 +43,7 @@ const CreateNews = () => {
   };
 
   const submit = () => {
-    createNews();
+    signUp();
     handleClose();
   };
 
@@ -60,31 +61,31 @@ const CreateNews = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Button variant="outlined" color="accent" onClick={handleClickOpen}>
-          +
-        </Button>
+        <Link className="signup" onClick={handleClickOpen}>
+          SignUp
+        </Link>
         <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create News</DialogTitle>
+          <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Create some amazing content here...
+              Please enter your email and password
             </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Title"
+              label="Email"
               type="text"
               fullWidth
-              value={formState.title}
+              value={formState.email}
               onChange={(e) =>
                 setFormState({
                   ...formState,
-                  title: e.target.value,
+                  email: e.target.value,
                 })
               }
               InputLabelProps={{
@@ -94,14 +95,14 @@ const CreateNews = () => {
             <TextField
               margin="dense"
               id="name"
-              label="Body"
+              label="Password"
               type="text"
               fullWidth
-              value={formState.body}
+              value={formState.password}
               onChange={(e) =>
                 setFormState({
                   ...formState,
-                  body: e.target.value,
+                  password: e.target.value,
                 })
               }
               InputLabelProps={{
@@ -123,4 +124,4 @@ const CreateNews = () => {
   );
 };
 
-export default CreateNews;
+export default SignUp;

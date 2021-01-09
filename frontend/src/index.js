@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import 'font-awesome/css/font-awesome.min.css';
+import { BrowserRouter } from 'react-router-dom';
 
 import {
   ApolloProvider,
@@ -22,9 +22,11 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

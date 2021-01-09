@@ -5,7 +5,6 @@ require "sinatra/json"
 require "sinatra/reloader" if development?
 require "./graphql/schema"
 Dir["./graphql/types/*"].each { |file| require file }
-Dir["./graphql/mutations/*"].each { |file| require file }
 Dir["./models/*"].each { |file| require file }
 
 Mongoid.load!(File.join(File.dirname(__FILE__), "config", "mongoid.yml"))
@@ -15,6 +14,8 @@ class Application < Sinatra::Base
     register Sinatra::Reloader
 
     use Rack::JSONBodyParser
+
+    enable :logging
   end
 
   helpers do
@@ -35,7 +36,23 @@ class Application < Sinatra::Base
       },
     ]
 
+    games = [
+      {
+        name: "Portal 2",
+      },
+      {
+        name: "No Man's Sky",
+      },
+      {
+        name: "The Stanley Parable",
+      },
+      {
+        name: "Papers, Please",
+      },
+    ]
+
     News.create!(news)
+    Games.create!(games)
   end
 
   post "/graphql" do

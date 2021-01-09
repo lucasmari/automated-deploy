@@ -2,7 +2,7 @@ require "graphql"
 require_relative "base_mutation"
 
 class Mutations::CreateNews < Mutations::BaseMutation
-  description "Creates a news"
+  description "Creates news"
 
   argument :title, String, required: true
   argument :body, String, required: true

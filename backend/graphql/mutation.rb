@@ -1,6 +1,6 @@
 require "graphql"
 require_relative "./mutations/create_news"
 
-class MutationType < GraphQL::Schema::Object
+class MutationType < Types::BaseObject
   field :createNews, mutation: Mutations::CreateNews
 end

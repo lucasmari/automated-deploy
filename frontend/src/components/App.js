@@ -1,19 +1,22 @@
-import './../styles/App.css';
 import React, { Component } from 'react';
-import NewsList from './NewsList';
-import CreateNews from './CreateNews';
+import { Switch, Route } from 'react-router-dom';
+import NavBar from './NavBar';
+import Home from './Home';
+import GamesList from './GamesList';
+import Contact from './Contact';
+import About from './About';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <div className="content-container">
-          <div className="content-subcontainer">
-            <h1>News</h1>
-            <CreateNews />
-          </div>
-          <NewsList />
-        </div>
+        <NavBar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/games" component={GamesList} />
+          <Route exact path="/contact" component={Contact} />
+          <Route exact path="/about" component={About} />
+        </Switch>
       </div>
     );
   }
