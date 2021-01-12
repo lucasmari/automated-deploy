@@ -32,7 +32,13 @@ const CreateNews = () => {
       title: formState.title,
       body: formState.body,
     },
-    onCompleted: () => history.push('/'),
+    onCompleted: (data, error) => {
+      if (error) alert(error);
+      data.createNews.success
+        ? alert('News created!')
+        : alert(data.createNews.errors);
+      history.push('/');
+    },
   });
 
   const [open, setOpen] = React.useState(false);
