@@ -8,6 +8,9 @@ const NEWS_QUERY = gql`
       id
       title
       body
+      postedBy {
+        name
+      }
     }
   }
 `;
@@ -16,7 +19,7 @@ const NewsList = () => {
   const { loading, error, data } = useQuery(NEWS_QUERY);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error :( {error}</p>;
 
   return (
     <div>

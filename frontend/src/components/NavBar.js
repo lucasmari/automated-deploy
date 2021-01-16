@@ -3,9 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from './logo.png';
 import './../styles/NavBar.css';
 import SignIn from './SignIn';
-import SignUp from './SignUp';
+import { AUTH_TOKEN } from '../constants';
 
 const NavBar = () => {
+  const authToken = localStorage.getItem(AUTH_TOKEN);
   return (
     <ul className="nav">
       <Link className="home-img" to="/">
@@ -31,8 +32,19 @@ const NavBar = () => {
           </button>
         </form>
       </div>
-      <SignIn />
-      <SignUp />
+      {authToken ? (
+        <Link
+          className="signout"
+          onClick={() => {
+            localStorage.removeItem(AUTH_TOKEN);
+          }}
+          to="/"
+        >
+          Sign Out
+        </Link>
+      ) : (
+        <SignIn />
+      )}
     </ul>
   );
 };

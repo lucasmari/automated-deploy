@@ -130,7 +130,7 @@ a {
 }
 
 .signin,
-.signup {
+.signout {
   font-size: 1.1em;
   padding: 16px 20px;
   display: block;
@@ -141,6 +141,6 @@ a {
 }
 
 .signin:hover,
-.signup:hover {
+.signout:hover {
   color: #ffc;
 }

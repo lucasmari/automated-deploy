@@ -10,12 +10,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { AUTH_TOKEN } from '../constants';
 
-const SIGN_IN_MUTATION = gql`
-  mutation SignIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password) {
+const SIGNUP_MUTATION = gql`
+  mutation CreateUser($name: String!, $email: String!, $password: String!) {
+    createUser(
+      name: $name
+      authProvider: { credentials: { email: $email, password: $password } }
+    ) {
       success
       errors
+    }
+  }
+`;
+
+const SIGNIN_MUTATION = gql`
+  mutation SignInUser($email: String!, $password: String!) {
+    signInUser(credentials: { email: $email, password: $password }) {
+      token
     }
   }
 `;
@@ -24,31 +36,55 @@ const SignIn = () => {
   const history = useHistory();
 
   const [formState, setFormState] = useState({
+    signin: true,
     email: '',
     password: '',
-  });
-
-  const [signIn] = useMutation(SIGN_IN_MUTATION, {
-    variables: {
-      email: formState.email,
-      password: formState.password,
-    },
-    onCompleted: () => history.push('/'),
+    name: '',
   });
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleOpen = () => {
     setOpen(true);
-  };
-
-  const submit = () => {
-    signIn();
-    handleClose();
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [signin] = useMutation(SIGNIN_MUTATION, {
+    variables: {
+      email: formState.email,
+      password: formState.password,
+    },
+    onCompleted: (data) => {
+      localStorage.setItem(AUTH_TOKEN, data.signInUser.token);
+      history.push('/');
+      handleClose();
+    },
+  });
+
+  const [signup] = useMutation(SIGNUP_MUTATION, {
+    variables: {
+      name: formState.name,
+      email: formState.email,
+      password: formState.password,
+    },
+    onCompleted: (data, error) => {
+      history.push('/');
+      handleClose();
+      if (error) alert(error);
+      data.createUser.success
+        ? alert('Account created!')
+        : alert(data.createUser.errors);
+    },
+  });
+
+  const changeContext = () => {
+    setFormState({
+      ...formState,
+      signin: !formState.signin,
+    });
   };
 
   const theme = createMuiTheme({
@@ -61,23 +97,45 @@ const SignIn = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Link className="signin" onClick={handleClickOpen}>
-          SignIn
+        <Link className="signin" onClick={handleOpen} to="">
+          Sign In
         </Link>
         <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Sign In</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {formState.signin ? 'Sign In' : 'Sign Up'}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Welcome, please enter your email and password
+              {formState.signin
+                ? 'Please enter your email and password'
+                : 'Welcome, please enter name, email and password'}
             </DialogContentText>
+            {!formState.signin && (
+              <TextField
+                margin="dense"
+                id="name"
+                label="Name"
+                type="text"
+                fullWidth
+                value={formState.name}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    name: e.target.value,
+                  })
+                }
+                InputLabelProps={{
+                  style: { color: 'white' },
+                }}
+              />
+            )}
             <TextField
-              autoFocus
               margin="dense"
-              id="name"
+              id="email"
               label="Email"
               type="text"
               fullWidth
@@ -94,7 +152,7 @@ const SignIn = () => {
             />
             <TextField
               margin="dense"
-              id="name"
+              id="password"
               label="Password"
               type="text"
               fullWidth
@@ -111,11 +169,13 @@ const SignIn = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="accent">
-              Cancel
+            <Button onClick={formState.signin ? signin : signup}>
+              {formState.signin ? 'Sign in' : 'Create account'}
             </Button>
-            <Button onClick={submit} color="accent">
-              Create
+            <Button onClick={changeContext}>
+              {formState.signin
+                ? 'Need to create an account?'
+                : 'Already have an account?'}
             </Button>
           </DialogActions>
         </Dialog>

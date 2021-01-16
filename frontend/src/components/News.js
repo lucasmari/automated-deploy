@@ -8,6 +8,7 @@ const News = (props) => {
         <div>
           <h3>{news.title}</h3>
           <p>{news.body}</p>
+          <p>Posted by: {news.postedBy.name}</p>
         </div>
         <img alt="placeholder"></img>
       </div>

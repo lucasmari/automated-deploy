@@ -3,4 +3,6 @@ class News
 
   field :title, type: String
   field :body, type: String
+
+  belongs_to :user
 end

@@ -33,11 +33,12 @@ const CreateNews = () => {
       body: formState.body,
     },
     onCompleted: (data, error) => {
+      history.push('/');
+      handleClose();
       if (error) alert(error);
       data.createNews.success
         ? alert('News created!')
         : alert(data.createNews.errors);
-      history.push('/');
     },
   });
 
@@ -45,11 +46,6 @@ const CreateNews = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
-
-  const submit = () => {
-    createNews();
-    handleClose();
   };
 
   const handleClose = () => {
@@ -66,7 +62,7 @@ const CreateNews = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Button variant="outlined" color="accent" onClick={handleClickOpen}>
+        <Button variant="outlined" onClick={handleClickOpen}>
           +
         </Button>
         <Dialog
@@ -82,7 +78,7 @@ const CreateNews = () => {
             <TextField
               autoFocus
               margin="dense"
-              id="name"
+              id="title"
               label="Title"
               type="text"
               fullWidth
@@ -99,7 +95,7 @@ const CreateNews = () => {
             />
             <TextField
               margin="dense"
-              id="name"
+              id="body"
               label="Body"
               type="text"
               fullWidth
@@ -116,12 +112,8 @@ const CreateNews = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="accent">
-              Cancel
-            </Button>
-            <Button onClick={submit} color="accent">
-              Create
-            </Button>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={createNews}>Create</Button>
           </DialogActions>
         </Dialog>
       </div>
