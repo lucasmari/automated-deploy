@@ -37,7 +37,7 @@ class Application < Sinatra::Base
       },
     ]
 
-    Games.create!(games)
+    Game.create!(games)
   end
 
   post "/graphql" do

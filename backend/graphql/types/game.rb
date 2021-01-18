@@ -2,7 +2,7 @@ require "graphql"
 require_relative "base_object"
 
 module Types
-  class Games < BaseObject
+  class Game < BaseObject
     description "Games item"
 
     field :id, ID, null: false

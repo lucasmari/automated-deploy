@@ -8,3 +8,6 @@ gem "puma"
 gem "rack-contrib"
 gem "sinatra"
 gem "sinatra-contrib"
+group :test do
+  gem "mongoid-rspec"
+end
