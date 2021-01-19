@@ -93,6 +93,7 @@ Yet another ~~complex~~ not so simple project for training DevOps and Programmin
 - GraphQL server
 - Sinatra (framework)
 - Puma (server)
+- Mongoid (ORM)
 
 ## How It Works
 
@@ -147,7 +148,9 @@ You can access Consul's dashboard in *localhost:18500* after running:
 
 Enter the *backend* directory and run:
 
-- `bundle exec rspec`
+1. `docker build --tag mongo ../infra/dev/db/.` (temporary)
+2. `docker run -d -p 27017:27017 mongo` (temporary)
+3. `bundle exec rspec`
 
 ## Production
 

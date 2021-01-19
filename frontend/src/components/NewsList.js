@@ -8,7 +8,7 @@ const NEWS_QUERY = gql`
       id
       title
       body
-      postedBy {
+      user {
         name
       }
     }

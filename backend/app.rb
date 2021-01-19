@@ -41,8 +41,8 @@ class Application < Sinatra::Base
   end
 
   post "/graphql" do
-    variables = params[:variables]
     query = params[:query]
+    variables = params[:variables]
     context = {
       current_user: current_user,
     }
