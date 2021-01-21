@@ -107,7 +107,7 @@ TODO
 
 #### Prerequisites
 
-- [Docker 20.10.x](https://www.docker.com/get-started)
+- [docker 20.10.x](https://www.docker.com/get-started)
 - [k3d 3.4.x](https://k3d.io/)
 - [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3.4.x](https://helm.sh/docs/intro/install/)
@@ -141,6 +141,7 @@ You can access Consul's dashboard in *localhost:18500* after running:
 
 #### Prerequisites
 
+- [docker-compose 1.27.x](https://docs.docker.com/compose/install/)
 - [bundler 2.1.x](https://bundler.io/)
 - [rspec 3.9.x](https://rspec.info/)
 
@@ -148,9 +149,7 @@ You can access Consul's dashboard in *localhost:18500* after running:
 
 Enter the *backend* directory and run:
 
-1. `docker build --tag mongo ../infra/dev/db/.` (temporary)
-2. `docker run -d -p 27017:27017 mongo` (temporary)
-3. `bundle exec rspec`
+- `./run_all_tests.sh`
 
 ## Production
 
