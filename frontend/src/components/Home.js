@@ -1,8 +1,8 @@
 import React from 'react';
 import NewsList from './NewsList';
 import CreateNews from './CreateNews';
-import './../styles/Home.css';
 import { AUTH_TOKEN } from '../constants';
+import './../styles/Home.css';
 
 const Home = () => {
   const authToken = localStorage.getItem(AUTH_TOKEN);

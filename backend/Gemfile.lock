@@ -64,6 +64,10 @@ GEM
       rspec-support (~> 3.10.0)
     rspec-support (3.10.1)
     ruby2_keywords (0.0.2)
+    search_object (1.2.4)
+    search_object_graphql (0.3.2)
+      graphql (~> 1.8)
+      search_object (~> 1.2.2)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -94,6 +98,7 @@ DEPENDENCIES
   mongoid-rspec
   puma
   rack-contrib
+  search_object_graphql
   sinatra
   sinatra-contrib
 

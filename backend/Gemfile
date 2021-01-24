@@ -6,6 +6,7 @@ gem "jwt"
 gem "mongoid"
 gem "puma"
 gem "rack-contrib"
+gem "search_object_graphql"
 gem "sinatra"
 gem "sinatra-contrib"
 group :test do

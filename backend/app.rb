@@ -4,7 +4,7 @@ require "rack/contrib"
 require "sinatra"
 require "sinatra/json"
 require "sinatra/reloader" if development?
-require "./graphql/schema"
+require_relative "./graphql/schema"
 Dir["./graphql/types/*"].each { |file| require file }
 Dir["./models/*"].each { |file| require file }
 
@@ -59,10 +59,10 @@ class Application < Sinatra::Base
     return unless !env["HTTP_AUTHORIZATION"].empty?
 
     auth_header = env["HTTP_AUTHORIZATION"]
-    hashed_token = auth_header.split(" ").last
+    token = auth_header.split(" ").last
 
     begin
-      token = JWT.decode(hashed_token, "secret", true, algorithm: "HS256")
+      decoded_token = JWT.decode(token, "secret", true, algorithm: "HS256")
     rescue JWT::DecodeError
       [401, { "Content-Type" => "text/plain" }, ["A token must be passed."]]
     rescue JWT::ExpiredSignature
@@ -73,11 +73,15 @@ class Application < Sinatra::Base
       [403, { "Content-Type" => "text/plain" }, ['The token does not have a valid "issued at" time.']]
     end
 
-    user_id = token[0].gsub("user-id:", "")
+    user_id = decoded_token[0].gsub("user-id:", "")
+
     User.find(user_id)
   end
 
   def handle_error_in_development(e)
-    # ...
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+
+    render json: { error: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 500
   end
 end

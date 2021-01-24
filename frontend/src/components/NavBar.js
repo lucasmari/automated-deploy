@@ -4,6 +4,7 @@ import logo from './logo.png';
 import './../styles/NavBar.css';
 import SignIn from './SignIn';
 import { AUTH_TOKEN } from '../constants';
+import SearchBar from './SearchBar';
 
 const NavBar = () => {
   const authToken = localStorage.getItem(AUTH_TOKEN);
@@ -24,14 +25,7 @@ const NavBar = () => {
       <NavLink className="about-nav" to="/about">
         About
       </NavLink>
-      <div className="search-container">
-        <form>
-          <input type="text" placeholder="Search..." name="search"></input>
-          <button type="submit">
-            <em className="fa fa-search"></em>
-          </button>
-        </form>
-      </div>
+      <SearchBar />
       {authToken ? (
         <Link
           className="signout"
