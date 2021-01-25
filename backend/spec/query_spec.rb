@@ -55,6 +55,37 @@ RSpec.describe QueryType do
     end
   end
 
+  context "when queried news with filter" do
+    let!(:news) { create_pair(:news) }
+
+    let(:query) do
+      <<-GRAPHQL
+      {
+        news(filter: {
+          OR: [{ titleContains: "title-3" }, { bodyContains: "title-3" }]
+        }) {
+          id
+          title
+          body
+          user {
+            name
+          }
+        }
+      }
+      GRAPHQL
+    end
+
+    subject(:result) do
+      ApplicationSchema.execute(query).as_json
+    end
+
+    it "returns filtered news" do
+      expect(result.dig("data", "news")).to include(
+        { "id" => be_present, "title" => "title-3", "body" => "body-3", "user" => { "name" => "user-8" } }
+      )
+    end
+  end
+
   context "when queried users" do
     let!(:users) { create_pair(:user) }
 
