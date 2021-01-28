@@ -7,8 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { useHistory } from 'react-router';
+import { createBrowserHistory } from 'history';
 
 const CREATE_NEWS_MUTATION = gql`
   mutation CreateNews($title: String!, $body: String!) {
@@ -20,8 +19,7 @@ const CREATE_NEWS_MUTATION = gql`
 `;
 
 const CreateNews = () => {
-  const history = useHistory();
-
+  const history = createBrowserHistory({ forceRefresh: true });
   const [formState, setFormState] = useState({
     title: '',
     body: '',
@@ -52,72 +50,63 @@ const CreateNews = () => {
     setOpen(false);
   };
 
-  const theme = createMuiTheme({
-    palette: {
-      type: 'dark',
-      accent: '#ffc',
-    },
-  });
-
   return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          +
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Create News</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Create some amazing content here...
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="title"
-              label="Title"
-              type="text"
-              fullWidth
-              value={formState.title}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  title: e.target.value,
-                })
-              }
-              InputLabelProps={{
-                style: { color: 'white' },
-              }}
-            />
-            <TextField
-              margin="dense"
-              id="body"
-              label="Body"
-              type="text"
-              fullWidth
-              value={formState.body}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  body: e.target.value,
-                })
-              }
-              InputLabelProps={{
-                style: { color: 'white' },
-              }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={createNews}>Create</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </ThemeProvider>
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        +
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Create News</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Create some amazing content here...
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="title"
+            label="Title"
+            type="text"
+            fullWidth
+            value={formState.title}
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                title: e.target.value,
+              })
+            }
+            InputLabelProps={{
+              style: { color: 'white' },
+            }}
+          />
+          <TextField
+            margin="dense"
+            id="body"
+            label="Body"
+            type="text"
+            fullWidth
+            value={formState.body}
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                body: e.target.value,
+              })
+            }
+            InputLabelProps={{
+              style: { color: 'white' },
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={createNews}>Create</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 };
 

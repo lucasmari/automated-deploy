@@ -56,7 +56,7 @@ class Application < Sinatra::Base
   private
 
   def current_user
-    return unless !env["HTTP_AUTHORIZATION"].empty?
+    return if env["HTTP_AUTHORIZATION"].empty?
 
     auth_header = env["HTTP_AUTHORIZATION"]
     token = auth_header.split(" ").last
@@ -64,24 +64,25 @@ class Application < Sinatra::Base
     begin
       decoded_token = JWT.decode(token, "secret", true, algorithm: "HS256")
     rescue JWT::DecodeError
-      [401, { "Content-Type" => "text/plain" }, ["A token must be passed."]]
+      halt 401, { "Content-Type" => "text/plain" }, "A token must be passed."
     rescue JWT::ExpiredSignature
-      [403, { "Content-Type" => "text/plain" }, ["The token has expired."]]
+      halt 403, { "Content-Type" => "text/plain" }, "The token has expired."
     rescue JWT::InvalidIssuerError
-      [403, { "Content-Type" => "text/plain" }, ["The token does not have a valid issuer."]]
+      halt 403, { "Content-Type" => "text/plain" }, "The token does not have a valid issuer."
     rescue JWT::InvalidIatError
-      [403, { "Content-Type" => "text/plain" }, ['The token does not have a valid "issued at" time.']]
+      halt 403, { "Content-Type" => "text/plain" }, 'The token does not have a valid "issued at" time.'
     end
 
     user_id = decoded_token[0].gsub("user-id:", "")
 
-    User.find(user_id)
+    user = User.find(user_id)
+    user.nil? ? halt(500, json({ user_not_found: true })) : user
   end
 
   def handle_error_in_development(e)
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { error: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 500
+    halt 500, json({ error: { message: e.message, backtrace: e.backtrace } })
   end
 end

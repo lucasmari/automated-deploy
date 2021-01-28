@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { useHistory } from 'react-router';
+import TextField from '@material-ui/core/TextField';
+import { createBrowserHistory } from 'history';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AUTH_TOKEN } from '../constants';
 
@@ -33,7 +32,7 @@ const SIGNIN_MUTATION = gql`
 `;
 
 const SignIn = () => {
-  const history = useHistory();
+  const history = createBrowserHistory({ forceRefresh: true });
 
   const [formState, setFormState] = useState({
     signin: true,
@@ -58,9 +57,11 @@ const SignIn = () => {
       password: formState.password,
     },
     onCompleted: (data) => {
-      localStorage.setItem(AUTH_TOKEN, data.signInUser.token);
-      history.push('/');
-      handleClose();
+      if (data.signInUser) {
+        localStorage.setItem(AUTH_TOKEN, data.signInUser.token);
+        history.push('/');
+        handleClose();
+      } else alert('Wrong email or password!');
     },
   });
 
@@ -87,100 +88,91 @@ const SignIn = () => {
     });
   };
 
-  const theme = createMuiTheme({
-    palette: {
-      type: 'dark',
-      accent: '#ffc',
-    },
-  });
-
   return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <Link className="signin" onClick={handleOpen} to="">
-          Sign In
-        </Link>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">
-            {formState.signin ? 'Sign In' : 'Sign Up'}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {formState.signin
-                ? 'Please enter your email and password'
-                : 'Welcome, please enter name, email and password'}
-            </DialogContentText>
-            {!formState.signin && (
-              <TextField
-                margin="dense"
-                id="name"
-                label="Name"
-                type="text"
-                fullWidth
-                value={formState.name}
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    name: e.target.value,
-                  })
-                }
-                InputLabelProps={{
-                  style: { color: 'white' },
-                }}
-              />
-            )}
+    <div>
+      <Link className="signin" onClick={handleOpen} to="">
+        Sign In
+      </Link>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          {formState.signin ? 'Sign In' : 'Sign Up'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {formState.signin
+              ? 'Please enter your email and password'
+              : 'Welcome, please enter name, email and password'}
+          </DialogContentText>
+          {!formState.signin && (
             <TextField
               margin="dense"
-              id="email"
-              label="Email"
+              id="name"
+              label="Name"
               type="text"
               fullWidth
-              value={formState.email}
+              value={formState.name}
               onChange={(e) =>
                 setFormState({
                   ...formState,
-                  email: e.target.value,
+                  name: e.target.value,
                 })
               }
               InputLabelProps={{
                 style: { color: 'white' },
               }}
             />
-            <TextField
-              margin="dense"
-              id="password"
-              label="Password"
-              type="text"
-              fullWidth
-              value={formState.password}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  password: e.target.value,
-                })
-              }
-              InputLabelProps={{
-                style: { color: 'white' },
-              }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={formState.signin ? signin : signup}>
-              {formState.signin ? 'Sign in' : 'Create account'}
-            </Button>
-            <Button onClick={changeContext}>
-              {formState.signin
-                ? 'Need to create an account?'
-                : 'Already have an account?'}
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </ThemeProvider>
+          )}
+          <TextField
+            margin="dense"
+            id="email"
+            label="Email"
+            type="text"
+            fullWidth
+            value={formState.email}
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                email: e.target.value,
+              })
+            }
+            InputLabelProps={{
+              style: { color: 'white' },
+            }}
+          />
+          <TextField
+            margin="dense"
+            id="password"
+            label="Password"
+            type="text"
+            fullWidth
+            value={formState.password}
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                password: e.target.value,
+              })
+            }
+            InputLabelProps={{
+              style: { color: 'white' },
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={formState.signin ? signin : signup}>
+            {formState.signin ? 'Sign in' : 'Create account'}
+          </Button>
+          <Button onClick={changeContext}>
+            {formState.signin
+              ? 'Need to create an account?'
+              : 'Already have an account?'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 };
 

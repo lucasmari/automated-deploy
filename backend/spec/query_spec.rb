@@ -61,9 +61,7 @@ RSpec.describe QueryType do
     let(:query) do
       <<-GRAPHQL
       {
-        news(filter: {
-          OR: [{ titleContains: "title-3" }, { bodyContains: "title-3" }]
-        }) {
+        news(filter: { titleContains: "title-3", OR: { bodyContains: "title-3" } }) {
           id
           title
           body

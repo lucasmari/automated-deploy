@@ -4,6 +4,8 @@ development:
       database: mongoid_dev
       hosts:
         - localhost:27017
+  options:
+    raise_not_found_error: false
 test:
   clients:
     default:

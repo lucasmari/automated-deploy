@@ -6,9 +6,7 @@ import { useHistory } from 'react-router';
 const NEWS_SEARCH_QUERY = gql`
   query NewsSearch($searchText: String!) {
     news(
-      filter: {
-        OR: [{ titleContains: $searchText }, { bodyContains: $searchText }]
-      }
+      filter: { titleContains: $searchText, OR: { bodyContains: $searchText } }
     ) {
       id
       title

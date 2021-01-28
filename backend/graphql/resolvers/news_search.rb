@@ -10,7 +10,7 @@ module Resolvers
     # scope is starting point for search
     scope { News.all }
 
-    type types[Types::News]
+    type [Types::News]
 
     # inline input type definition for the advanced filter
     class NewsFilter < ::Types::BaseInputObject
@@ -21,6 +21,8 @@ module Resolvers
 
     # when "filter" is passed "apply_filter" would be called to narrow the scope
     option :filter, type: NewsFilter, with: :apply_filter
+    option :first, type: types.Int, with: :apply_first
+    option :skip, type: types.Int, with: :apply_skip
 
     # apply_filter recursively loops through "OR" branches
     def apply_filter(scope, value)
@@ -38,6 +40,14 @@ module Resolvers
       value[:OR].reduce(branches) { |s, v| normalize_filters(v, s) } if value[:OR].present?
 
       branches
+    end
+
+    def apply_first(scope, value)
+      scope.limit(value)
+    end
+
+    def apply_skip(scope, value)
+      scope.offset(value)
     end
   end
 end

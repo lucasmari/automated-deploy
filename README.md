@@ -129,8 +129,6 @@ Inside the project's root directory, run the following commands to deploy consul
 
 Now you can access the app at *localhost:8082* :clap:
 
-> :warning: If you sign in and stop skaffold, you need to clear the token stored in your browser before starting skaffold again :warning: (temporary)
-
 ### Monitoring
 
 #### Consul

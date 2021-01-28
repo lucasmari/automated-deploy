@@ -14,22 +14,23 @@ const GAMES_QUERY = gql`
 const GamesList = () => {
   const { loading, error, data } = useQuery(GAMES_QUERY);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
   return (
-    <div className="content-container">
-      <h1>Games</h1>
-      <div>
-        {data && (
-          <>
-            {data.games.map((games) => (
-              <Games key={games.id} games={games} />
-            ))}
-          </>
-        )}
+    <>
+      {loading && <p>Loading...</p>}
+      {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
+      <div className="content-container">
+        <h1>Games</h1>
+        <div>
+          {data && (
+            <>
+              {data.games.map((games) => (
+                <Games key={games.id} games={games} />
+              ))}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -94,3 +94,7 @@ strong {
   margin: 50px;
   background-color: #505050;
 }
+
+.pagination {
+  text-align: center;
+}

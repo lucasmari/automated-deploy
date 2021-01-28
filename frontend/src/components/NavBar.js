@@ -1,13 +1,16 @@
+import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from './logo.png';
-import './../styles/NavBar.css';
-import SignIn from './SignIn';
 import { AUTH_TOKEN } from '../constants';
+import './../styles/NavBar.css';
+import logo from './logo.png';
 import SearchBar from './SearchBar';
+import SignIn from './SignIn';
 
 const NavBar = () => {
+  const history = createBrowserHistory({ forceRefresh: true });
   const authToken = localStorage.getItem(AUTH_TOKEN);
+
   return (
     <ul className="nav">
       <Link className="home-img" to="/">
@@ -31,8 +34,8 @@ const NavBar = () => {
           className="signout"
           onClick={() => {
             localStorage.removeItem(AUTH_TOKEN);
+            history.push('/');
           }}
-          to="/"
         >
           Sign Out
         </Link>
