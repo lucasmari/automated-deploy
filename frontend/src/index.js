@@ -1,18 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import reportWebVitals from './reportWebVitals';
-import 'font-awesome/css/font-awesome.min.css';
-import { BrowserRouter } from 'react-router-dom';
-import { setContext } from '@apollo/client/link/context';
-import { AUTH_TOKEN } from './constants';
-
 import {
-  ApolloProvider,
   ApolloClient,
+  ApolloProvider,
   createHttpLink,
   InMemoryCache,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import 'font-awesome/css/font-awesome.min.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/App';
+import { AUTH_TOKEN } from './constants';
+import reportWebVitals from './reportWebVitals';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:8082/graphql',

@@ -144,12 +144,20 @@ You can access Consul's dashboard in *localhost:18500* after running:
 - [docker-compose 1.27.x](https://docs.docker.com/compose/install/)
 - [bundler 2.1.x](https://bundler.io/)
 - [rspec 3.9.x](https://rspec.info/)
+- [yarn 1.22.x](https://yarnpkg.com/getting-started/install)
 
 #### Backend
 
 Enter the *backend* directory and run:
 
 - `./run_all_tests.sh`
+
+#### Frontend
+
+Enter the *frontend* directory and run:
+
+- `yarn` (just the first time, for installing node modules, or everytime you fetch the repo)
+- `yarn jest`
 
 ## Production
 
