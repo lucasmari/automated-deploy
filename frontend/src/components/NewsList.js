@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { AUTH_TOKEN, NEWS_PER_PAGE } from '../constants';
+import CreateNews from './CreateNews';
 import News from './News';
 
 const NEWS_QUERY = gql`
@@ -34,6 +35,7 @@ const getNewsToRender = (isNewPage, data) => {
 };
 
 const NewsList = () => {
+  const authToken = localStorage.getItem(AUTH_TOKEN);
   const history = useHistory();
   const isNewPage = history.location.pathname.includes('new');
   const pageIndexParams = history.location.pathname.split('/');
@@ -65,40 +67,46 @@ const NewsList = () => {
   return (
     <>
       {loading && <p>Loading...</p>}
-      {data && data.count.news > 0 ? (
-        <>
-          {getNewsToRender(isNewPage, data).map((news, index) => (
-            <News key={news.id} news={news} index={index + pageIndex} />
-          ))}
-          {isNewPage && (
-            <div className="pagination">
-              <Button
-                onClick={() => {
-                  if (page > 1) {
-                    history.push(`/new/${page - 1}`);
-                  }
-                }}
-              >
-                &#60;
-              </Button>
-              <Button
-                onClick={() => {
-                  if (page < data.count.news / NEWS_PER_PAGE) {
-                    const nextPage = page + 1;
-                    history.push(`/new/${nextPage}`);
-                  }
-                }}
-              >
-                &#62;
-              </Button>
-            </div>
-          )}
-        </>
-      ) : (
-        <div>
-          <p>No news... </p>
+      <div className="content-container">
+        <div className="content-subcontainer">
+          <h1>News</h1>
+          {authToken && <CreateNews />}
         </div>
-      )}
+        {data && data.count.news > 0 ? (
+          <>
+            {getNewsToRender(isNewPage, data).map((news, index) => (
+              <News key={news.id} news={news} index={index + pageIndex} />
+            ))}
+            {isNewPage && (
+              <div className="pagination">
+                <Button
+                  onClick={() => {
+                    if (page > 1) {
+                      history.push(`/new/${page - 1}`);
+                    }
+                  }}
+                >
+                  &#60;
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (page < data.count.news / NEWS_PER_PAGE) {
+                      const nextPage = page + 1;
+                      history.push(`/new/${nextPage}`);
+                    }
+                  }}
+                >
+                  &#62;
+                </Button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div>
+            <p>No news... </p>
+          </div>
+        )}
+      </div>
     </>
   );
 };

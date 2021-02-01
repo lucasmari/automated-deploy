@@ -156,7 +156,7 @@ Enter the *backend* directory and run:
 
 Enter the *frontend* directory and run:
 
-- `yarn` (just the first time, for installing node modules, or everytime you fetch the repo)
+- `yarn` (just the first time for installing node modules, or everytime you fetch the repo)
 - `yarn jest`
 
 ## Production
