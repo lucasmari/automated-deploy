@@ -103,7 +103,7 @@ const NewsList = () => {
           </>
         ) : (
           <div>
-            <p>No news... </p>
+            <p>No news...</p>
           </div>
         )}
       </div>

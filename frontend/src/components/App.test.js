@@ -43,12 +43,13 @@ it('navigates home when you click the logo', () => {
 
   act(() => {
     const goHomeLink = document.querySelector('.home-img');
-    goHomeLink.dispatchEvent(new MouseEvent('click'));
+    goHomeLink.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 
   expect(testLocation.pathname).toBe('/news/1');
-  expect(document.body.textContent).toContain('News');
-  expect(document.body.textContent).toContain('No news...');
+  expect(document.querySelector('.content-container').textContent).toBe(
+    'NewsNo news...'
+  );
 });
 
 it("navigates home when you click the site's name", () => {
@@ -74,12 +75,13 @@ it("navigates home when you click the site's name", () => {
 
   act(() => {
     const goHomeLink = document.querySelector('.home');
-    goHomeLink.dispatchEvent(new MouseEvent('click'));
+    goHomeLink.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 
   expect(testLocation.pathname).toBe('/news/1');
-  expect(document.body.textContent).toContain('News');
-  expect(document.body.textContent).toContain('No news...');
+  expect(document.querySelector('.content-container').textContent).toBe(
+    'NewsNo news...'
+  );
 });
 
 it('navigates to /games when you click Games', () => {
@@ -93,11 +95,13 @@ it('navigates to /games when you click Games', () => {
   );
 
   act(() => {
-    const goHomeLink = document.querySelector('.games-nav');
-    goHomeLink.dispatchEvent(new MouseEvent('click'));
+    const goToGamesLink = document.querySelector('.games-nav');
+    goToGamesLink.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 
-  expect(document.body.textContent).toContain('Games');
+  expect(document.querySelector('.content-container').textContent).toBe(
+    'Games'
+  );
 });
 
 it('navigates to /contact when you click Contact', () => {
@@ -111,11 +115,13 @@ it('navigates to /contact when you click Contact', () => {
   );
 
   act(() => {
-    const goHomeLink = document.querySelector('.contact-nav');
-    goHomeLink.dispatchEvent(new MouseEvent('click'));
+    const goToContactLink = document.querySelector('.contact-nav');
+    goToContactLink.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 
-  expect(document.body.textContent).toContain('Contact');
+  expect(document.querySelector('.content-container').textContent).toBe(
+    'ContactEmail: easter.egg@gmail.comTel: 0118 999 881 999 119 7253'
+  );
 });
 
 it('navigates to /about when you click About', () => {
@@ -129,9 +135,11 @@ it('navigates to /about when you click About', () => {
   );
 
   act(() => {
-    const goHomeLink = document.querySelector('.contact-nav');
-    goHomeLink.dispatchEvent(new MouseEvent('click'));
+    const goToAboutLink = document.querySelector('.about-nav');
+    goToAboutLink.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 
-  expect(document.body.textContent).toContain('About');
+  expect(document.querySelector('.content-container').textContent).toBe(
+    'AboutThis is an easter egg site...'
+  );
 });
