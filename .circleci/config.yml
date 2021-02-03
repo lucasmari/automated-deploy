@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 jobs:
   plan-apply:
@@ -62,26 +62,40 @@ jobs:
           root: .
           paths:
             - .
+  node-tests:
+    working_directory: ~/automated-deploy/frontend
+    docker:
+      - image: node:current-alpine
+    steps:
+      - checkout:
+          path: ~/automated-deploy
+      - run:
+          name: install dependencies and run tests
+          command: |
+            yarn install
+            yarn jest
 
 workflows:
-  version: 2
-  plan_approve_apply:
+  # prod:
+  #   jobs:
+  #     - plan-apply
+  #     - hold-apply:
+  #         type: approval
+  #         requires:
+  #           - plan-apply
+  #     - apply:
+  #         requires:
+  #           - hold-apply
+  #     - plan-destroy:
+  #         requires:
+  #           - apply
+  #     - hold-destroy:
+  #         type: approval
+  #         requires:
+  #           - plan-destroy
+  #     - destroy:
+  #         requires:
+  #           - hold-destroy
+  dev:
     jobs:
-      - plan-apply
-      - hold-apply:
-          type: approval
-          requires:
-            - plan-apply
-      - apply:
-          requires:
-            - hold-apply
-      - plan-destroy:
-          requires:
-            - apply
-      - hold-destroy:
-          type: approval
-          requires:
-            - plan-destroy
-      - destroy:
-          requires:
-            - hold-destroy
+      - node-tests
