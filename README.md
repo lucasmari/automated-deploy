@@ -39,56 +39,64 @@ Yet another ~~complex~~ not so simple project for training DevOps and Programmin
 
 ### Structure and Components
 
-**Infrastructure**
+#### Infrastructure
 
-#### Cloud Provider
+Cloud Provider
 
 - AWS
 
-#### CI/CD
+CI/CD
 
 - CircleCI
 
-#### Provisioning
+Provisioning
 
-- Packer
-- Terraform
-- Ansible
+- Development
 
-#### Service Mesh & Secrets Management
+  - k3d
+  - Helm
+  - Skaffold
+
+- Production
+  
+  - Packer
+  - Terraform
+  - Ansible
+
+Service Mesh & Secrets Management
 
 - Consul
 - Vault
 
-#### Database & Storage
+Database & Storage
 
 - MongoDB
 - S3
 
-#### Containers & Container Orchestration
+Containers & Container Orchestration
 
 - Docker
 - Kubernetes
 
-#### Monitoring
+Monitoring
 
 - Grafana
 - New Relic
 - Elastic Stack
 
-**Web Application**
+#### Web Application
 
-#### Ingress/Load Balancer/Reverse Proxy
+Ingress/Load Balancer/Reverse Proxy
 
 - Nginx
 
-#### Frontend (JS, HTML, CSS)
+Frontend (JS, HTML, CSS)
 
 - Apollo (GraphQL client)
 - React (library)
 - Node.js (server)
 
-#### Backend (Ruby)
+Backend (Ruby)
 
 - GraphQL server
 - Sinatra (framework)
@@ -103,9 +111,9 @@ TODO
 
 ### Development
 
-**Deployment**
+#### Deployment
 
-#### Prerequisites
+Prerequisites
 
 - [docker 20.10.x](https://www.docker.com/get-started)
 - [k3d 3.4.x](https://k3d.io/)
@@ -113,14 +121,14 @@ TODO
 - [helm 3.4.x](https://helm.sh/docs/intro/install/)
 - [skaffold 1.17.x](https://skaffold.dev/docs/install/)
 
-#### Setup
+Setup
 
 Create a local cluster and add helm repositories:
 
 1. `k3d cluster create -p "8082:80@loadbalancer"`
 2. `helm repo add hashicorp https://helm.releases.hashicorp.com`
 
-#### Deploy
+Deploy
 
 Inside the project's root directory, run the following commands to deploy consul and bring the development environment up:
 
@@ -129,30 +137,30 @@ Inside the project's root directory, run the following commands to deploy consul
 
 Now you can access the app at *localhost:8082* :clap:
 
-**Monitoring**
+#### Monitoring
 
-#### Consul
+Consul
 
 You can access Consul's dashboard in *localhost:18500* after running:
 
 - `kubectl port-forward service/consul-ui 18500:80 --address 0.0.0.0`
 
-**Testing**
+#### Testing
 
-#### Prerequisites
+Prerequisites
 
 - [docker-compose 1.27.x](https://docs.docker.com/compose/install/)
 - [bundler 2.1.x](https://bundler.io/)
 - [rspec 3.9.x](https://rspec.info/)
 - [yarn 1.22.x](https://yarnpkg.com/getting-started/install)
 
-#### Backend
+Backend
 
 Enter the *backend* directory and run:
 
 - `./run_all_tests.sh`
 
-#### Frontend
+Frontend
 
 Enter the *frontend* directory and run:
 
@@ -161,22 +169,22 @@ Enter the *frontend* directory and run:
 
 ### Production
 
-**Deployment**
+#### Deployment
 
-#### Prerequisites
+Prerequisites
 
 - [CircleCI account](https://app.circleci.com/dashboard)
 - [AWS account](https://console.aws.amazon.com)
 - [terraform 0.14.x](https://www.terraform.io/downloads.html)
 
-#### Setup
+Setup
 
 1. Fork this repository
 2. Open CircleCI and setup the project, adding your AWS credentials as environment variables
 3. Enter the *setup* directory and run `terraform init && terraform apply`
 4. Open *main.tf* and add the bucket ID
 
-#### Deploy
+Deploy
 
 The deployment should trigger automatically after a push or merge to the master.
 
