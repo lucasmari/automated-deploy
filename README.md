@@ -33,13 +33,13 @@ Simple web app with an automated deploy :v:
   </ul>
 </details>
 
-# About
+## About
 
 Yet another ~~complex~~ not so simple project for training DevOps and Programming skills.
 
-## Structure and Components
+### Structure and Components
 
-### Infrastructure
+**Infrastructure**
 
 #### Cloud Provider
 
@@ -76,7 +76,7 @@ Yet another ~~complex~~ not so simple project for training DevOps and Programmin
 - New Relic
 - Elastic Stack
 
-### Web Application
+**Web Application**
 
 #### Ingress/Load Balancer/Reverse Proxy
 
@@ -95,15 +95,15 @@ Yet another ~~complex~~ not so simple project for training DevOps and Programmin
 - Puma (server)
 - Mongoid (ORM)
 
-## How It Works
+### How It Works
 
 TODO
 
-# Getting Started
+## Getting Started
 
-## Development
+### Development
 
-### Deployment
+**Deployment**
 
 #### Prerequisites
 
@@ -129,7 +129,7 @@ Inside the project's root directory, run the following commands to deploy consul
 
 Now you can access the app at *localhost:8082* :clap:
 
-### Monitoring
+**Monitoring**
 
 #### Consul
 
@@ -137,7 +137,7 @@ You can access Consul's dashboard in *localhost:18500* after running:
 
 - `kubectl port-forward service/consul-ui 18500:80 --address 0.0.0.0`
 
-### Testing
+**Testing**
 
 #### Prerequisites
 
@@ -159,9 +159,9 @@ Enter the *frontend* directory and run:
 - `yarn` (just the first time for installing node modules, or everytime you fetch the repo)
 - `yarn jest`
 
-## Production
+### Production
 
-### Deployment
+**Deployment**
 
 #### Prerequisites
 
@@ -179,3 +179,14 @@ Enter the *frontend* directory and run:
 #### Deploy
 
 The deployment should trigger automatically after a push or merge to the master.
+
+## Contributing
+
+We encourage you to contribute to Automated Deploy! Please check out the
+[contributing guide](https://github.com/lucasmari/automated-deploy/blob/master/CONTRIBUTING.md).
+
+Everyone interacting in this project is expected to follow the [code of conduct](https://github.com/lucasmari/automated-deploy/blob/master/CODE_OF_CONDUCT.md).
+
+## License
+
+Automated Deploy is maintained under the [MIT License](https://opensource.org/licenses/MIT).
