@@ -4,6 +4,7 @@ require "rack/contrib"
 require "sinatra"
 require "sinatra/json"
 require "sinatra/reloader" if development?
+require "vault"
 require_relative "./graphql/schema"
 Dir["./graphql/types/*"].each { |file| require file }
 Dir["./models/*"].each { |file| require file }
@@ -20,6 +21,7 @@ class Application < Sinatra::Base
   end
 
   helpers do
+    # Repopulate MongoDB
     Mongoid.purge!
 
     games = [
@@ -38,6 +40,15 @@ class Application < Sinatra::Base
     ]
 
     Game.create!(games)
+
+    # Authenticate and configure Vault
+    # Vault.auth.token(ENV["VAULT_TOKEN"])
+
+    Vault.configure do |config|
+      config.address = ENV["VAULT_ADDR"]
+      config.token = ENV["VAULT_TOKEN"]
+      config.ssl_verify = false
+    end
   end
 
   post "/graphql" do
@@ -57,6 +68,11 @@ class Application < Sinatra::Base
 
   def current_user
     return if env["HTTP_AUTHORIZATION"].empty?
+
+    Vault.with_retries(Vault::HTTPConnectionError) do
+      read_secret = Vault.logical.read("secret")
+      puts read_secret.data
+    end
 
     auth_header = env["HTTP_AUTHORIZATION"]
     token = auth_header.split(" ").last

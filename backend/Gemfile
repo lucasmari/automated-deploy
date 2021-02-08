@@ -9,6 +9,7 @@ gem "rack-contrib"
 gem "search_object_graphql"
 gem "sinatra"
 gem "sinatra-contrib"
+gem "vault"
 group :test do
   gem "database_cleaner-mongoid"
   gem "factory_bot"

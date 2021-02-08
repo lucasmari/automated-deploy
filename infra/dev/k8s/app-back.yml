@@ -14,14 +14,19 @@ spec:
       labels:
         app: app-back
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
-        'consul.hashicorp.com/connect-service-upstreams': 'db:27017'
+        "consul.hashicorp.com/connect-inject": "true"
+        "consul.hashicorp.com/connect-service-upstreams": "db:27017"
     spec:
       containers:
         - name: app-back
           image: graphql-sinatra-puma
           ports:
             - containerPort: 4000
+          env:
+            - name: VAULT_ADDR
+              value: "http://vault:8200"
+            - name: VAULT_TOKEN
+              value: "s.1XMLF3RE0yRJL9vxBvUo3vsT"
 
 ---
 apiVersion: v1
@@ -32,5 +37,5 @@ spec:
   selector:
     app: app-back
   ports:
-  - protocol: TCP
-    port: 4000
+    - protocol: TCP
+      port: 4000

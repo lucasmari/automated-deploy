@@ -1,5 +1,6 @@
 require "graphql"
 require "jwt"
+require "vault"
 require_relative "base_mutation"
 require_relative "../types/auth_provider_credentials_input"
 
@@ -18,6 +19,9 @@ module Mutations
       return unless user.authenticate(credentials[:password])
 
       token = JWT.encode("user-id:#{user.id}", "secret")
+      Vault.with_retries(Vault::HTTPConnectionError) do
+        Vault.logical.write("secret", token: token)
+      end
 
       { token: token }
     end
