@@ -21,14 +21,9 @@ const GamesList = () => {
         );
 
       if (networkError) {
-        if (networkError.result.user_not_found) {
-          localStorage.removeItem(AUTH_TOKEN);
-          history.push('/');
-        } else {
-          console.log(
-            `[Network error]: ${JSON.stringify(networkError, null, 2)}`
-          );
-        }
+        console.log(
+          `[Network error]: ${JSON.stringify(networkError, null, 2)}`
+        );
       }
     },
   });
@@ -36,9 +31,9 @@ const GamesList = () => {
   return (
     <>
       {loading && <p>Loading...</p>}
-      {error && <p>Error :(</p>}
       <div className="content-container">
         <h1>Games</h1>
+        {error && <p>Error :(</p>}
         <div>
           {data && (
             <>

@@ -52,7 +52,7 @@ const NewsList = () => {
         );
 
       if (networkError) {
-        if (networkError.result.user_not_found) {
+        if (networkError.result && networkError.result.user_not_found) {
           localStorage.removeItem(AUTH_TOKEN);
           history.push('/');
         } else {
@@ -67,7 +67,6 @@ const NewsList = () => {
   return (
     <>
       {loading && <p>Loading...</p>}
-      {error && <p>Error :(</p>}
       <div className="content-container">
         <div className="content-subcontainer">
           <h1>News</h1>
@@ -103,9 +102,15 @@ const NewsList = () => {
             )}
           </>
         ) : (
-          <div>
-            <p>No news...</p>
-          </div>
+          <>
+            {error ? (
+              <p>Error :(</p>
+            ) : (
+              <div>
+                <p>No news...</p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>
