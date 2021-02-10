@@ -42,7 +42,7 @@ const NewsList = () => {
   const page = parseInt(pageIndexParams[pageIndexParams.length - 1]);
   const pageIndex = page ? (page - 1) * NEWS_PER_PAGE : 0;
 
-  const { loading, data } = useQuery(NEWS_QUERY, {
+  const { loading, error, data } = useQuery(NEWS_QUERY, {
     variables: getQueryVariables(isNewPage, page),
     errorPolicy: 'all',
     onError: ({ graphQLErrors, networkError }) => {
@@ -67,6 +67,7 @@ const NewsList = () => {
   return (
     <>
       {loading && <p>Loading...</p>}
+      {error && <p>Error :(</p>}
       <div className="content-container">
         <div className="content-subcontainer">
           <h1>News</h1>
