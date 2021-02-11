@@ -119,21 +119,31 @@ Prerequisites
 - [k3d 3.4.x](https://k3d.io/)
 - [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3.4.x](https://helm.sh/docs/intro/install/)
-- [skaffold 1.17.x](https://skaffold.dev/docs/install/)
+- [skaffold 1.19.x](https://skaffold.dev/docs/install/)
 
 Setup
 
 Create a local cluster and add helm repositories:
 
-1. `k3d cluster create -p "8082:80@loadbalancer"`
-2. `helm repo add hashicorp https://helm.releases.hashicorp.com`
+1. `k3d cluster create -p "8082:80@loadbalancer" --api-port 6550`
+2. 
+```
+helm repo add hashicorp https://helm.releases.hashicorp.com && \
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
+helm repo add grafana https://grafana.github.io/helm-charts && \
+helm repo update
+```
 
 Deploy
 
-Inside the project's root directory, run the following commands to deploy consul and bring the development environment up:
+Inside the project's root directory, run the following commands to deploy Consul, Prometheus, Grafana and bring the development environment up:
 
-1. `helm install -f infra/dev/consul/values.yml consul hashicorp/consul`
-2. `skaffold dev`
+1. `helm install consul hashicorp/consul -f infra/dev/consul/values.yml`
+2. `helm install prometheus prometheus-community/prometheus -f infra/dev/prometheus/values.yml`
+3. `helm install grafana grafana/grafana -f infra/dev/grafana/values.yml`
+4. `skaffold dev`
+
+> You may need to use `watch kubectl get pods` to wait for the pods to be ready before running skaffold (temporary)
 
 Now you can access the app at *localhost:8082* :clap:
 
@@ -141,9 +151,23 @@ Now you can access the app at *localhost:8082* :clap:
 
 Consul
 
-You can access Consul's dashboard in *localhost:18500* after running:
+You can access Consul UI in *localhost:18500* after running:
 
 - `kubectl port-forward service/consul-ui 18500:80 --address 0.0.0.0`
+
+Prometheus
+
+You can access Prometheus UI in *localhost:9090* after running:
+
+- `kubectl port-forward service/prometheus-server 9090:80 --address 0.0.0.0`
+
+Grafana
+
+You can access Grafana UI in *localhost:3000* after running:
+
+- `kubectl port-forward service/grafana 3000:80 --address 0.0.0.0`
+
+Login with *admin* and *password* then import the dashboard from *infra/dev/grafana/dashboard.json*.
 
 #### Testing
 

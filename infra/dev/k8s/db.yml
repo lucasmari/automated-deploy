@@ -14,7 +14,10 @@ spec:
       labels:
         app: db
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9102"
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/connect-service-protocol: "tcp"
     spec:
       containers:
         - name: db
@@ -31,5 +34,5 @@ spec:
   selector:
     app: db
   ports:
-  - protocol: TCP
-    port: 27017
+    - protocol: TCP
+      port: 27017

@@ -14,8 +14,11 @@ spec:
       labels:
         app: app-back
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
-        'consul.hashicorp.com/connect-service-upstreams': 'db:27017'
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9102"
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/connect-service-upstreams: "db:27017"
+        consul.hashicorp.com/connect-service-protocol: "tcp"
     spec:
       containers:
         - name: app-back
@@ -32,5 +35,5 @@ spec:
   selector:
     app: app-back
   ports:
-  - protocol: TCP
-    port: 4000
+    - protocol: TCP
+      port: 4000

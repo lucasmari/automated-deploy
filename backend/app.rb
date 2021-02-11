@@ -20,8 +20,6 @@ class Application < Sinatra::Base
   end
 
   helpers do
-    Mongoid.purge!
-
     games = [
       {
         name: "Portal 2",
@@ -37,7 +35,7 @@ class Application < Sinatra::Base
       },
     ]
 
-    Game.create!(games)
+    Game.create!(games) unless Game.exists?
   end
 
   post "/graphql" do
