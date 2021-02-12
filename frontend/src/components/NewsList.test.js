@@ -1,107 +1,119 @@
 import { MockedProvider } from '@apollo/client/testing';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import TestRenderer from 'react-test-renderer';
 import NewsList, { NEWS_QUERY } from './NewsList';
 
 let container = null;
+let consoleOutput = [];
+const mockedLog = (output) => consoleOutput.push(output);
+const originalLog = console.log;
 
 beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
+  console.log = mockedLog;
 });
 
 afterEach(() => {
   unmountComponentAtNode(container);
   container.remove();
   container = null;
+  console.log = originalLog;
 });
+
+function mockHistory() {
+  const original = require.requireActual('react-router-dom');
+  return {
+    ...original,
+    useHistory: jest.fn().mockReturnValue({
+      location: {
+        pathname: '/new',
+      },
+      push: '/',
+    }),
+  };
+}
+
+jest.mock('react-router-dom', () => mockHistory());
 
 const mocks = [
   {
-    1: {
-      request: {
-        query: NEWS_QUERY,
-        variables: {
-          first: 3,
-          skip: 0,
-        },
+    request: {
+      query: NEWS_QUERY,
+      variables: {
+        first: 3,
+        skip: 0,
       },
-      result: {
-        data: {
-          news: {
+    },
+    result: {
+      data: {
+        news: [
+          {
             id: '1',
             title: 'New Easter Egg',
             body: 'Wow, amazing',
             user: { name: 'me' },
           },
-          count: {
-            news: 1,
-          },
+        ],
+        count: {
+          news: 1,
         },
       },
     },
+  },
 
-    2: {
-      request: {
-        query: NEWS_QUERY,
-        variables: {
-          first: 3,
-          skip: 0,
-        },
+  {
+    request: {
+      query: NEWS_QUERY,
+      variables: {
+        first: 3,
+        skip: 0,
       },
-      networkError: {
-        result: {
-          user_not_found: true,
-        },
+    },
+    networkError: {
+      result: {
+        user_not_found: true,
       },
     },
   },
 ];
 
 it('returns the loading state', () => {
-  const component = TestRenderer.create(
-    <BrowserRouter>
-      <MockedProvider mocks={mocks['1']} addTypename={false}>
-        <NewsList />
-      </MockedProvider>
-    </BrowserRouter>,
+  render(
+    <MockedProvider mocks={[mocks[0]]} addTypename={false}>
+      <NewsList />
+    </MockedProvider>,
     container
   );
 
-  const tree = component.toJSON();
-  expect(tree[0].children).toContain('Loading...');
+  expect(document.querySelector('p').textContent).toBe('Loading...');
 });
 
 it('returns a list of news', async () => {
-  const component = TestRenderer.create(
-    <BrowserRouter>
-      <MockedProvider mocks={mocks['1']} addTypename={false}>
-        <NewsList />
-      </MockedProvider>
-    </BrowserRouter>,
+  render(
+    <MockedProvider mocks={[mocks[0]]} addTypename={false}>
+      <NewsList />
+    </MockedProvider>,
     container
   );
 
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
 
-  const p = component.root.findByType('p');
-  expect(p.children.join('')).toContain('Buck is a poodle');
+  expect(document.querySelector('.content-container').textContent).toBe(
+    'NewsNo news...'
+  );
 });
 
 it('returns an error', async () => {
-  const component = TestRenderer.create(
-    <BrowserRouter>
-      <MockedProvider mocks={mocks['2']} addTypename={false}>
-        <NewsList />
-      </MockedProvider>
-    </BrowserRouter>,
+  render(
+    <MockedProvider mocks={[mocks[1]]} addTypename={false}>
+      <NewsList />
+    </MockedProvider>,
     container
   );
 
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
 
-  const tree = component.toJSON();
-  expect(tree[0].children).toContain('An error occurred');
+  expect(document.querySelector('p').textContent).toBe('Error :(');
 });

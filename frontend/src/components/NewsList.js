@@ -6,7 +6,7 @@ import { AUTH_TOKEN, NEWS_PER_PAGE } from '../constants';
 import CreateNews from './CreateNews';
 import News from './News';
 
-const NEWS_QUERY = gql`
+export const NEWS_QUERY = gql`
   query NewsQuery($first: Int, $skip: Int) {
     news(first: $first, skip: $skip) {
       id
@@ -66,12 +66,13 @@ const NewsList = () => {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
       <div className="content-container">
         <div className="content-subcontainer">
           <h1>News</h1>
           {authToken && <CreateNews />}
         </div>
+        {loading && <p>Loading...</p>}
+        {error && <p>Error :(</p>}
         {data && data.count.news > 0 ? (
           <>
             {getNewsToRender(isNewPage, data).map((news, index) => (
@@ -103,8 +104,8 @@ const NewsList = () => {
           </>
         ) : (
           <>
-            {error ? (
-              <p>Error :(</p>
+            {error || loading ? (
+              <></>
             ) : (
               <div>
                 <p>No news...</p>

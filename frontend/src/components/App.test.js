@@ -48,7 +48,7 @@ it('navigates home when you click the logo', () => {
 
   expect(testLocation.pathname).toBe('/news/1');
   expect(document.querySelector('.content-container').textContent).toBe(
-    'NewsNo news...'
+    'NewsLoading...'
   );
 });
 
@@ -80,7 +80,7 @@ it("navigates home when you click the site's name", () => {
 
   expect(testLocation.pathname).toBe('/news/1');
   expect(document.querySelector('.content-container').textContent).toBe(
-    'NewsNo news...'
+    'NewsLoading...'
   );
 });
 
@@ -100,7 +100,7 @@ it('navigates to /games when you click Games', () => {
   });
 
   expect(document.querySelector('.content-container').textContent).toBe(
-    'Games'
+    'GamesLoading...'
   );
 });
 

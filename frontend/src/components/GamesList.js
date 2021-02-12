@@ -2,7 +2,7 @@ import React from 'react';
 import Games from './Games';
 import { useQuery, gql } from '@apollo/client';
 
-const GAMES_QUERY = gql`
+export const GAMES_QUERY = gql`
   {
     games {
       id
@@ -30,9 +30,9 @@ const GamesList = () => {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
       <div className="content-container">
         <h1>Games</h1>
+        {loading && <p>Loading...</p>}
         {error && <p>Error :(</p>}
         <div>
           {data && (
