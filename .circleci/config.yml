@@ -74,6 +74,24 @@ jobs:
           command: |
             yarn install
             yarn jest
+  ruby-tests:
+    working_directory: ~/automated-deploy/backend
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout:
+          path: ~/automated-deploy
+      - run:
+          name: install docker-compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.28.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - run:
+          name: run tests
+          command: |
+            ./run_ci_tests.sh
 
 workflows:
   # prod:
@@ -99,3 +117,4 @@ workflows:
   dev:
     jobs:
       - node-tests
+      - ruby-tests

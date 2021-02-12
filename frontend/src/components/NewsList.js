@@ -42,7 +42,7 @@ const NewsList = () => {
   const page = parseInt(pageIndexParams[pageIndexParams.length - 1]);
   const pageIndex = page ? (page - 1) * NEWS_PER_PAGE : 0;
 
-  const { loading, data } = useQuery(NEWS_QUERY, {
+  const { loading, error, data } = useQuery(NEWS_QUERY, {
     variables: getQueryVariables(isNewPage, page),
     errorPolicy: 'all',
     onError: ({ graphQLErrors, networkError }) => {
@@ -52,7 +52,7 @@ const NewsList = () => {
         );
 
       if (networkError) {
-        if (networkError.result.user_not_found) {
+        if (networkError.result && networkError.result.user_not_found) {
           localStorage.removeItem(AUTH_TOKEN);
           history.push('/');
         } else {
@@ -102,9 +102,15 @@ const NewsList = () => {
             )}
           </>
         ) : (
-          <div>
-            <p>No news...</p>
-          </div>
+          <>
+            {error ? (
+              <p>Error :(</p>
+            ) : (
+              <div>
+                <p>No news...</p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

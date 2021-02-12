@@ -5,6 +5,19 @@ global:
 server:
   replicas: 1
   bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
+  extraConfig: |
+    {
+      "ui_config": {
+        "enabled": true,
+        "metrics_provider": "prometheus",
+        "metrics_proxy": {
+          "base_url": "http://prometheus-server"
+        }
+      }
+    }
 
 client:
   enabled: true
@@ -16,10 +29,14 @@ ui:
 connectInject:
   enabled: true
 
+  centralConfig:
+    enabled: true
+    defaultProtocol: "http"
+    proxyDefaults: |
+      {
+        "envoy_prometheus_bind_addr": "0.0.0.0:9102"
+      }
+  logLevel: "debug"
+
 controller:
   enabled: true
-
-extraConfig: |
-  {
-    "log_level": "DEBUG"
-  }
