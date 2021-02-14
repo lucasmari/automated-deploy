@@ -1,0 +1,20 @@
+repositories:
+  - name: hashicorp
+    url: https://helm.releases.hashicorp.com
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+releases:
+  - name: consul
+    chart: hashicorp/consul
+    values:
+      - infra/dev/consul/values.yml
+  - name: prometheus
+    chart: prometheus-community/prometheus
+    values:
+      - infra/dev/prometheus/values.yml
+  - name: grafana
+    chart: grafana/grafana
+    values:
+      - infra/dev/grafana/values.yml

@@ -53,8 +53,9 @@ Provisioning
 
 - Development
 
-  - k3d
+  - K3d
   - Helm
+  - Helmfile
   - Skaffold
 
 - Production
@@ -80,8 +81,9 @@ Containers & Container Orchestration
 
 Monitoring
 
-- Grafana
-- New Relic
+- Prometheus (collector)
+- Grafana (infra)
+- Sentry (app)
 - Elastic Stack
 
 #### Web Application
@@ -105,7 +107,7 @@ Backend (Ruby)
 
 ### How It Works
 
-TODO
+TODO (diagram)
 
 ## Getting Started
 
@@ -119,33 +121,18 @@ Prerequisites
 - [k3d 3.4.x](https://k3d.io/)
 - [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3.4.x](https://helm.sh/docs/intro/install/)
+- [helmfile 0.138.x](https://github.com/roboll/helmfile)
 - [skaffold 1.19.x](https://skaffold.dev/docs/install/)
 
-Setup
+Setup & Deploy
 
-Create a local cluster and add helm repositories:
+Run the script `./setup_&_deploy.sh` in the root folder, then access the app at *localhost:8082*. :clap:
 
-1. `k3d cluster create -p "8082:80@loadbalancer" --api-port 6550`
-2. 
-```
-helm repo add hashicorp https://helm.releases.hashicorp.com && \
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
-helm repo add grafana https://grafana.github.io/helm-charts && \
-helm repo update
-```
+> This will create a cluster using k3d, deploy infra (Consul, Prometheus and Grafana) using helmfile and deploy app (frontend, backend and db) using skaffold.
 
-Deploy
+Subsequent Deployments
 
-Inside the project's root directory, run the following commands to deploy Consul, Prometheus, Grafana and bring the development environment up:
-
-1. `helm install consul hashicorp/consul -f infra/dev/consul/values.yml`
-2. `helm install prometheus prometheus-community/prometheus -f infra/dev/prometheus/values.yml`
-3. `helm install grafana grafana/grafana -f infra/dev/grafana/values.yml`
-4. `skaffold dev`
-
-> You may need to use `watch kubectl get pods` to wait for the pods to be ready before running skaffold (temporary)
-
-Now you can access the app at *localhost:8082* :clap:
+> After the setup, you just need to start the cluster with `k3d cluster start`, then run `skaffold dev`.
 
 #### Monitoring
 
@@ -167,13 +154,13 @@ You can access Grafana UI in *localhost:3000* after running:
 
 - `kubectl port-forward service/grafana 3000:80 --address 0.0.0.0`
 
-Login with *admin* and *password* then import the dashboard from *infra/dev/grafana/dashboard.json*.
+> Login with *admin* and *password* then import the dashboard from *infra/dev/grafana/dashboard.json*.
 
 #### Testing
 
 Prerequisites
 
-- [docker-compose 1.27.x](https://docs.docker.com/compose/install/)
+- [docker-compose 1.28.x](https://docs.docker.com/compose/install/)
 - [bundler 2.1.x](https://bundler.io/)
 - [rspec 3.9.x](https://rspec.info/)
 - [yarn 1.22.x](https://yarnpkg.com/getting-started/install)
