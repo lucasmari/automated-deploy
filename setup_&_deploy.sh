@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu pipefail
+set -euo pipefail
 
 NC='\e[0m'
 GREEN='\e[0;32m'
@@ -17,13 +17,13 @@ waiting() {
     sleep 0.2
 }
 
-echo -e "${BLUE}  [ Creating cluster ]\n${NC}- - - - - - - - - - - - -"
+echo -e "\n${BLUE}  [ Creating cluster ]\n${NC}- - - - - - - - - - - - -"
 k3d cluster create -p "8082:80@loadbalancer" --api-port 6550;
 
-echo -e "${BLUE}  [ Deploying infra ]\n${NC}- - - - - - - - - - - - -"
+echo -e "\n${BLUE}  [ Deploying infra ]\n${NC}- - - - - - - - - - - - -"
 helmfile -q apply;
 while [[ $(kubectl get pods --namespace default -l "app=consul,component=server" -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do waiting; done
 echo -e "\\r${GREEN}  Ready!\n"
 
-echo -e "${BLUE}  [ Deploying app ]\n${NC}- - - - - - - - - - - -"
+echo -e "\n${BLUE}  [ Deploying app ]\n${NC}- - - - - - - - - - - -"
 skaffold dev

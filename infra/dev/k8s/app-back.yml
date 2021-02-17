@@ -18,7 +18,6 @@ spec:
         prometheus.io/port: "9102"
         consul.hashicorp.com/connect-inject: "true"
         consul.hashicorp.com/connect-service-upstreams: "db:27017"
-        consul.hashicorp.com/connect-service-protocol: "tcp"
     spec:
       containers:
         - name: app-back
@@ -37,3 +36,11 @@ spec:
   ports:
     - protocol: TCP
       port: 4000
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: app-back
+spec:
+  protocol: tcp

@@ -17,7 +17,6 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9102"
         consul.hashicorp.com/connect-inject: "true"
-        consul.hashicorp.com/connect-service-protocol: "tcp"
     spec:
       containers:
         - name: db
@@ -36,3 +35,11 @@ spec:
   ports:
     - protocol: TCP
       port: 27017
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: db
+spec:
+  protocol: tcp
