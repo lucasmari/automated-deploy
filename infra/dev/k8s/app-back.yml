@@ -36,11 +36,3 @@ spec:
   ports:
     - protocol: TCP
       port: 4000
-
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: app-back
-spec:
-  protocol: tcp

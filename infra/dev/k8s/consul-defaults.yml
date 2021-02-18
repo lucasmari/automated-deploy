@@ -1,0 +1,24 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ProxyDefaults
+metadata:
+  name: global
+spec:
+  config:
+    protocol: http
+    envoy_prometheus_bind_addr: "0.0.0.0:9102"
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: app-back
+spec:
+  protocol: tcp
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: db
+spec:
+  protocol: tcp

@@ -32,13 +32,3 @@ connectInject:
 
 controller:
   enabled: true
-
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ProxyDefaults
-metadata:
-  name: global
-spec:
-  config:
-    protocol: http
-    envoy_prometheus_bind_addr: "0.0.0.0:9102"

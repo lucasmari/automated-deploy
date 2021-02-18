@@ -128,7 +128,7 @@ Setup & Deploy
 
 Run the script `./setup_&_deploy.sh` in the root folder, then access the app at *localhost:8082*. :clap:
 
-> This will create a cluster using k3d, deploy infra (Consul, Prometheus and Grafana) using helmfile and deploy app (frontend, backend and db) using skaffold.
+> This will create a cluster using k3d, deploy Helm charts using helmfile and deploy k8s resources using skaffold.
 
 Subsequent Deployments
 

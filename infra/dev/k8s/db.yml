@@ -35,11 +35,3 @@ spec:
   ports:
     - protocol: TCP
       port: 27017
-
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: db
-spec:
-  protocol: tcp
