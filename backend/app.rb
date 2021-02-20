@@ -1,6 +1,7 @@
 require "jwt"
 require "mongoid"
 require "rack/contrib"
+require "sentry-ruby"
 require "sinatra"
 require "sinatra/json"
 require "sinatra/reloader" if development?
@@ -36,6 +37,12 @@ class Application < Sinatra::Base
     ]
 
     Game.create!(games) unless Game.exists?
+
+    Sentry.init do |config|
+      config.dsn = "http://356b31b641494391a8539dd77b98a3bd@localhost:9000/2"
+    end
+
+    Sentry.capture_message("hello world!")
   end
 
   post "/graphql" do

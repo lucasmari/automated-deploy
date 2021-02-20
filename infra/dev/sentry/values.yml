@@ -1,0 +1,33 @@
+asHook: true
+
+sentry:
+  worker:
+    replicas: 1
+
+# system:
+#   secretKey: "mLO5ZL9L26r4wnFRb5MLCdfYIbyviCz9JkxYQ0358WVcGONrjN"
+
+nginx:
+  enabled: false
+
+ingress:
+  enabled: true
+  regexPathStyle: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+
+# postgresql:
+#   postgresqlPassword: postgres
+
+rabbitmq:
+  enabled: false
+
+clickhouse:
+  clickhouse:
+    replicas: 1
+    persistentVolumeClaim:
+      enabled: false
+
+kafka:
+  replicaCount: 1
