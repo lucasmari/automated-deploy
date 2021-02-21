@@ -1,4 +1,4 @@
-require_relative "../models/news"
+require_relative "../../models/news"
 
 RSpec.describe News, type: :model do
   it { is_expected.to be_mongoid_document }

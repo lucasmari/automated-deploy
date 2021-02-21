@@ -1,4 +1,6 @@
-require_relative "../graphql/schema"
+require_relative "../../graphql/schema"
+require_relative "../../models/user"
+require_relative "../../models/news"
 
 RSpec.describe MutationType do
   context "when queried createNews with title and body" do

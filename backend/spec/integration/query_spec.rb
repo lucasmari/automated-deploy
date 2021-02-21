@@ -1,4 +1,6 @@
-require_relative "../graphql/schema"
+require_relative "../../graphql/schema"
+require_relative "../../models/user"
+require_relative "../../models/game"
 
 RSpec.describe QueryType do
   context "when queried games" do

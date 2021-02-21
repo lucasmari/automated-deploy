@@ -1,4 +1,4 @@
-require_relative "../models/user"
+require_relative "../../models/user"
 
 RSpec.describe User, type: :model do
   it { is_expected.to be_mongoid_document }

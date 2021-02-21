@@ -169,7 +169,8 @@ Backend
 
 Enter the *backend* directory and run:
 
-- `./run_all_tests.sh`
+- `./run_unit_tests.sh`
+- `./run_integration_tests.sh`
 
 Frontend
 
