@@ -191,10 +191,23 @@ Prerequisites
 
 Setup
 
+GitHub and CircleCI
+
 1. Fork this repository
 2. Open CircleCI and setup the project, adding your AWS credentials as environment variables
-3. Enter the *setup* directory and run `terraform init && terraform apply`
-4. Open *main.tf* and add the bucket ID
+
+S3
+
+1. Enter the *setup* directory and run `terraform init && terraform apply` to create a bucket for storing states
+2. Open *main.tf* inside the *eks* and *root* directories and change the bucket ID
+
+EKS
+
+1. Add the [minimum permissions](https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/iam-permissions.md) needed for creating an EKS
+2. Enter the *eks* directory and run `terraform init && terraform apply` to create an EKS
+3. Run `aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)` to configure your EKS locally
+
+> :warning: Don't forget to destroy the eks after or else you'll be charged :warning:
 
 Deploy
 
