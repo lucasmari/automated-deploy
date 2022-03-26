@@ -2,37 +2,6 @@
 
 Simple web app with an automated deploy :v:
 
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ul>
-    <a href="#about">About</a>
-    <ul>
-      <li><a href="#structure-and-components">Structure and Components</a>
-      <ul>
-        <li><a href="#infrastructure">Infrastructure</a></li>
-        <li><a href="#web-application">Web Application</a></li>
-      </ul>
-      </li>
-      <li><a href="#how-it-works">How It Works</a></li>
-    </ul>
-    <a href="#getting-started">Getting Started</a>
-    <ul>
-      <li><a href="#development">Development</a>
-      <ul>
-        <li><a href="#deployment">Deployment</a></li>
-        <li><a href="#monitoring">Monitoring</a></li>
-        <li><a href="#testing">Testing</a></li>
-      </ul>
-      </li>
-      <li><a href="#production">Production</a>
-      <ul>
-        <li><a href="#deployment">Deployment</a></li>
-      </ul>
-      </li>
-    </ul>
-  </ul>
-</details>
-
 ## About
 
 Yet another ~~complex~~ not so simple project for training DevOps and Programming skills.
@@ -121,6 +90,7 @@ Prerequisites
 - [k3d 3.4.x](https://k3d.io/)
 - [kubectl 1.20.x](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3.4.x](https://helm.sh/docs/intro/install/)
+- [helm-diff 3.4.x](https://github.com/databus23/helm-diff)
 - [helmfile 0.138.x](https://github.com/roboll/helmfile)
 - [skaffold 1.19.x](https://skaffold.dev/docs/install/)
 
